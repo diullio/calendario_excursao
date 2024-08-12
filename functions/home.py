@@ -5,7 +5,6 @@ from PyQt5.QtCore import Qt, QAbstractTableModel, QDate, QPoint
 from PyQt5.QtGui import QTextCharFormat, QColor
 from datetime import datetime, timedelta
 from unidecode import unidecode
-from fpdf import FPDF
 import pandas as pd
 
 class setarInicio():
@@ -33,13 +32,13 @@ class setarInicio():
         self.startSystem()
 
     def startSystem(self):
-        try:
+        # try:
             self.botoesIniciais()
-        except Exception as e:
-            print(f"Ocorreu uma exceção: {e}")
+        # except Exception as e:
+        #     print(f"Ocorreu uma exceção: {e}")
 
     def botoesIniciais(self):
-        try:
+        # try:
             ##MAIN
             self.gui.date_inicial.setCalendarPopup(True)
             self.gui.date_inicial.setDate(datetime.now().date())
@@ -61,7 +60,6 @@ class setarInicio():
             self.ui_Registros.dateEdit_2.setDate(datetime.now().date() + timedelta(days=7))
 
             self.ui_Registros.btn_busca_log.clicked.connect(self.fBuscaLOG)
-            self.ui_Registros.btn_exportar_log.clicked.connect(self.exportarLog)
             self.df_registro = None
 
             ##BOTOES
@@ -91,15 +89,15 @@ class setarInicio():
             self.ui_retirada.buttonBox.accepted.connect(self.selecionarRetirada)
             self.ui_retirada.buttonBox.rejected.connect(self.retirada.reject)
 
-        except Exception as e:
-            print(f"Ocorreu uma exceção: {e}")
+        # except Exception as e:
+        #     print(f"Ocorreu uma exceção: {e}")
 
     ##CADASTRO
     def showCadastro(self):
-        try:
+        # try:
             self.Cadastro.exec_()          
-        except Exception as e:
-            print(f"Ocorreu uma exceção: {e}")
+        # except Exception as e:
+        #     print(f"Ocorreu uma exceção: {e}")
 
     def ajustar_data(self, data):
         # Se a data cair em um sábado (6) ou domingo (7), ajuste para segunda-feira
@@ -114,7 +112,7 @@ class setarInicio():
         return data_recomendada
 
     def LerInfosCadastro(self):
-        try:
+        # try:
             codigo = self.ui_Cadastro.ln_codigo.text()
             num_estudo = self.ui_Cadastro.ln_num_estudo.text()
             produto = self.ui_Cadastro.ln_produto.text()
@@ -149,11 +147,11 @@ class setarInicio():
                     chk_15dias = data_15_dias.toString('yyyy-MM-dd')
             return codigo, num_estudo, produto, lote, data, chk_5dias, chk_15dias
 
-        except Exception as e:
-            print(f"Ocorreu uma exceção: {e}")
+        # except Exception as e:
+        #     print(f"Ocorreu uma exceção: {e}")
     
     def LimparInfosCadastro(self):
-        try:
+        # try:
             self.ui_Cadastro.ln_codigo.clear()
             self.ui_Cadastro.ln_num_estudo.clear()
             self.ui_Cadastro.ln_produto.clear()
@@ -161,8 +159,8 @@ class setarInicio():
             self.ui_Cadastro.date_cadastro.setDate(datetime.now().date())
             self.ui_Cadastro.chk_5dias.setChecked(False)
             self.ui_Cadastro.chk_15dias.setChecked(False)
-        except Exception as e:
-            print(f"Ocorreu uma exceção: {e}") 
+        # except Exception as e:
+        #     print(f"Ocorreu uma exceção: {e}") 
 
     def format_date(self, data_str):
         # Converta a coluna de string para datetime, usando errors='coerce' para tratar valores nulos
@@ -171,10 +169,10 @@ class setarInicio():
         if pd.isnull(data_str):
             return '-'
         else:
-            return data_str.dt.strftime('%d/%m/%Y')
+            return data_str.strftime('%d/%m/%Y')
 
     def CadastrarInfos(self):
-        try:
+        # try:
             codigo, num_estudo, produto, lote, data, chk_5dias, chk_15dias = self.LerInfosCadastro()
             resultado = self.bd.query_cadastrar(codigo, num_estudo, produto, lote, data, chk_5dias, chk_15dias)
             if resultado == 'sucesso':
@@ -209,8 +207,8 @@ class setarInicio():
                 """
 
                 self.bd.enviarEmail(subject, body)
-        except Exception as e:
-            print(f"Ocorreu uma exceção: {e}") 
+        # except Exception as e:
+        #     print(f"Ocorreu uma exceção: {e}") 
     
     def converter_e_substituir_datas(self, df, coluna):
         # Converta a coluna de string para datetime, usando errors='coerce' para tratar valores nulos
@@ -220,7 +218,7 @@ class setarInicio():
         return df
 
     def buscaCadastro(self):
-        try:    
+        # try:    
             ln_num_estudo = self.gui.ln_num_estudo.text()
             ln_produto = self.gui.ln_produto.text()
             ln_lote = self.gui.ln_lote.text()
@@ -242,8 +240,8 @@ class setarInicio():
             self.gui.tableView_agenda.setContextMenuPolicy(Qt.CustomContextMenu)
             self.gui.tableView_agenda.customContextMenuRequested.connect(self.open_menu)
         
-        except Exception as e:
-            print(f"Ocorreu uma exceção: {e}") 
+        # except Exception as e:
+        #     print(f"Ocorreu uma exceção: {e}") 
 
     def open_menu(self, position: QPoint):
         menu = QMenu()
@@ -264,18 +262,18 @@ class setarInicio():
         menu.exec_(self.gui.tableView_agenda.viewport().mapToGlobal(position))
 
     def copy_selection(self):
-        try:
+        # try:
         # Simula a ação de Ctrl+C
             selected_indexes = self.gui.tableView_agenda.selectionModel().selectedIndexes()
             if selected_indexes:
                 index = selected_indexes[0]  # Como é seleção única, pegue o primeiro (e único) índice
                 text = self.gui.tableView_agenda.model().data(index)
                 QApplication.clipboard().setText(text)
-        except Exception as e:
-            print(f"Ocorreu uma exceção: {e}")
+        # except Exception as e:
+        #     print(f"Ocorreu uma exceção: {e}")
 
     def deletarCadastro(self):
-        try:
+        # try:
             selected_indexes = self.gui.tableView_agenda.selectionModel().selectedIndexes()
             if selected_indexes:
                 row = selected_indexes[0].row()
@@ -332,27 +330,27 @@ class setarInicio():
                         return
                 else:
                     return
-        except Exception as e:
-            print(f"Ocorreu uma exceção: {e}")
+        # except Exception as e:
+        #     print(f"Ocorreu uma exceção: {e}")
 
     def CancelarCadastro(self):
-        try:
+        # try:
             self.LimparInfosCadastro()
             self.Cadastro.reject()          
-        except Exception as e:
-            print(f"Ocorreu uma exceção: {e}")
+        # except Exception as e:
+        #     print(f"Ocorreu uma exceção: {e}")
 
     ##UPDATE CADASTRO
     def showUpdateCadastro(self):
-        try:
+        # try:
             self.LimparInfosUpdate()
             self.setarInfosUpdate()
             self.UpdateCadastro.exec_()          
-        except Exception as e:
-            print(f"Ocorreu uma exceção: {e}")
+        # except Exception as e:
+        #     print(f"Ocorreu uma exceção: {e}")
 
     def setarInfosUpdate(self):
-        try:
+        # try:
             selected_indexes = self.gui.tableView_agenda.selectionModel().selectedIndexes()
             if selected_indexes:
                 row = selected_indexes[0].row()
@@ -371,11 +369,11 @@ class setarInicio():
                     self.ui_UpdateCadastro.chk_5dias.setChecked(True)
                 if chk_15dias:
                     self.ui_UpdateCadastro.chk_15dias.setChecked(True)
-        except Exception as e:
-            print(f"Ocorreu uma exceção: {e}")
+        # except Exception as e:
+        #     print(f"Ocorreu uma exceção: {e}")
     
     def LimparInfosUpdate(self):
-        try:
+        # try:
             self.id = None
             self.ui_UpdateCadastro.ln_codigo.clear()
             self.ui_UpdateCadastro.ln_num_estudo.clear()
@@ -384,11 +382,11 @@ class setarInicio():
             self.ui_UpdateCadastro.date_cadastro.setDate(datetime.now().date())
             self.ui_UpdateCadastro.chk_5dias.setChecked(False)
             self.ui_UpdateCadastro.chk_15dias.setChecked(False)
-        except Exception as e:
-            print(f"Ocorreu uma exceção: {e}") 
+        # except Exception as e:
+        #     print(f"Ocorreu uma exceção: {e}") 
 
     def LerInfosUpdate(self):
-        try:
+        # try:
             codigo = self.ui_UpdateCadastro.ln_codigo.text()
             num_estudo = self.ui_UpdateCadastro.ln_num_estudo.text()
             produto = self.ui_UpdateCadastro.ln_produto.text()
@@ -424,11 +422,11 @@ class setarInicio():
 
             return codigo, num_estudo, produto, lote, data, chk_5dias, chk_15dias
 
-        except Exception as e:
-            print(f"Ocorreu uma exceção: {e}")
+        # except Exception as e:
+        #     print(f"Ocorreu uma exceção: {e}")
 
     def UpdateInfos(self):
-        try:
+        # try:
             id = self.id
             id = int(id)
             if not id:
@@ -468,19 +466,19 @@ class setarInicio():
                 """
 
                 self.bd.enviarEmail(subject, body)
-        except Exception as e:
-            print(f"Ocorreu uma exceção: {e}") 
+        # except Exception as e:
+        #     print(f"Ocorreu uma exceção: {e}") 
     
     def cancelarUpdate(self):
-        try:
+        # try:
             self.LimparInfosUpdate()
             self.UpdateCadastro.reject()          
-        except Exception as e:
-            print(f"Ocorreu uma exceção: {e}")
+        # except Exception as e:
+        #     print(f"Ocorreu uma exceção: {e}")
     
     ##CONSULTAS
     def buscar_dados(self):
-        try:
+        # try:
             data = self.gui.calendarWidget.selectedDate().toString("yyyy-MM-dd")
             df = self.bd.consultaCalendario(data)
 
@@ -497,8 +495,8 @@ class setarInicio():
             self.gui.tableView_agenda.resizeColumnsToContents()
             self.gui.tableView_agenda.setContextMenuPolicy(Qt.CustomContextMenu)
             self.gui.tableView_agenda.customContextMenuRequested.connect(self.open_menu)
-        except Exception as e:
-            print(f"Ocorreu uma exceção: {e}")    
+        # except Exception as e:
+        #     print(f"Ocorreu uma exceção: {e}")    
 
     def resetar_dias(self):
          # Formato de texto para resetar as datas para branco
@@ -509,12 +507,12 @@ class setarInicio():
         current_year = QDate.currentDate().year()
         for month in range(1, 13):
             for day in range(1, 32):
-                try:
+                # try:
                     qdate = QDate(current_year, month, day)
                     if qdate.isValid():
                         self.gui.calendarWidget.setDateTextFormat(qdate, format_white_background)
-                except ValueError:
-                    pass
+                # except ValueError:
+                #     pass
 
     def colorir_dias_anteriores(self):
         data_hoje = QDate.currentDate().toString("yyyy-MM-dd")
@@ -526,14 +524,20 @@ class setarInicio():
         datas_anteriores_5 = self.bd.buscarDatasAnteriores_5(data_hoje)
         # Itera sobre as datas e colore os dias no calendário
         for data in datas_anteriores_5:
-            qdate = QDate.fromString(data[0], "yyyy-MM-dd")
-            self.gui.calendarWidget.setDateTextFormat(qdate, format_red_background)
+            date_str = data[0]
+            if isinstance(date_str, str):
+                qdate = QDate.fromString(date_str, "yyyy-MM-dd")
+                if qdate.isValid():
+                    self.gui.calendarWidget.setDateTextFormat(qdate, format_red_background)
 
         datas_anteriores_15 = self.bd.buscarDatasAnteriores_15(data_hoje)
         # Itera sobre as datas e colore os dias no calendário
         for data in datas_anteriores_15:
-            qdate = QDate.fromString(data[0], "yyyy-MM-dd")
-            self.gui.calendarWidget.setDateTextFormat(qdate, format_red_background)
+            date_str = data[0]
+            if isinstance(date_str, str):
+                qdate = QDate.fromString(date_str, "yyyy-MM-dd")
+                if qdate.isValid():
+                    self.gui.calendarWidget.setDateTextFormat(qdate, format_red_background)
 
     def colorir_dias_futuros(self):
         data_hoje = QDate.currentDate().toString("yyyy-MM-dd")
@@ -545,26 +549,33 @@ class setarInicio():
         datas_futuras_5 = self.bd.buscarDatasFuturas_5(data_hoje)
         # Itera sobre as datas e colore os dias no calendário
         for data in datas_futuras_5:
-            qdate = QDate.fromString(data[0], "yyyy-MM-dd")
-            self.gui.calendarWidget.setDateTextFormat(qdate, format_green_background)
+            date_str = data[0]
+            if isinstance(date_str, str):
+                qdate = QDate.fromString(data[0], "yyyy-MM-dd")
+                if qdate.isValid():
+                    self.gui.calendarWidget.setDateTextFormat(qdate, format_green_background)
 
         datas_futuras_15 = self.bd.buscarDatasFuturas_15(data_hoje)
         # Itera sobre as datas e colore os dias no calendário
+        # Itera sobre as datas e colore os dias no calendário
         for data in datas_futuras_15:
-            qdate = QDate.fromString(data[0], "yyyy-MM-dd")
-            self.gui.calendarWidget.setDateTextFormat(qdate, format_green_background)
+            date_str = data[0]
+            if isinstance(date_str, str):
+                qdate = QDate.fromString(data[0], "yyyy-MM-dd")
+                if qdate.isValid():
+                    self.gui.calendarWidget.setDateTextFormat(qdate, format_green_background)
 
     ##AMOSTRAS RETIRADAS
     def show_retiradas(self):
-        try:
+        # try:
             self.LimparInfosRetirada()
             self.setarRetirarAmostras()
             self.retirada.exec_()
-        except Exception as e:
-            print(f"Ocorreu uma exceção: {e}")
+        # except Exception as e:
+        #     print(f"Ocorreu uma exceção: {e}")
 
     def selecionarRetirada(self):
-        try:
+        # try:
             selected_indexes = self.gui.tableView_agenda.selectionModel().selectedIndexes()
             if selected_indexes:
                 row = selected_indexes[0].row()
@@ -662,11 +673,11 @@ class setarInicio():
                     QMessageBox.information(None, 'Alerta', 'Amostra já foi retirada!')
                     return
 
-        except Exception as e:
-            print(f"Ocorreu uma exceção: {e}")
+        # except Exception as e:
+        #     print(f"Ocorreu uma exceção: {e}")
     
     def consultaRetiradas(self):
-        try:
+        # try:
             ln_num_estudo = self.gui.ln_num_estudo.text()
             ln_produto = self.gui.ln_produto.text()
             ln_lote = self.gui.ln_lote.text()
@@ -686,21 +697,21 @@ class setarInicio():
             self.gui.tableView_retirados.setModel(model)
             self.gui.tableView_retirados.setSelectionMode(QAbstractItemView.SingleSelection)
             self.gui.tableView_retirados.resizeColumnsToContents()
-        except Exception as e:
-            print(f"Ocorreu uma exceção: {e}")
+        # except Exception as e:
+        #     print(f"Ocorreu uma exceção: {e}")
 
     def LimparInfosRetirada(self):
-        try:
+        # try:
             self.ui_retirada.ln_retirada_5.setReadOnly(True)
             self.ui_retirada.chk_5dias.setChecked(False)
             self.ui_retirada.ln_retirada_15.setReadOnly(True)
             self.ui_retirada.chk_15dias.setChecked(False)
             self.ui_retirada.ln_justificativa.clear()
-        except Exception as e:
-            print(f"Ocorreu uma exceção: {e}")
+        # except Exception as e:
+        #     print(f"Ocorreu uma exceção: {e}")
 
     def setarRetirarAmostras(self):
-        try:
+        # try:
             selected_indexes = self.gui.tableView_agenda.selectionModel().selectedIndexes()
             if selected_indexes:
                 row = selected_indexes[0].row()
@@ -720,18 +731,18 @@ class setarInicio():
             else:
                 QMessageBox.information(None, 'Alerta', 'Selecione uma amostra para retirar para análise')
                 return
-        except Exception as e:
-            print(f"Ocorreu uma exceção: {e}")
+        # except Exception as e:
+        #     print(f"Ocorreu uma exceção: {e}")
 
     ##AUDITORIA
     def showRegistro(self):
-        try:
+        # try:
             self.Registros.exec_()          
-        except Exception as e:
-            print(f"Ocorreu uma exceção: {e}")
+        # except Exception as e:
+        #     print(f"Ocorreu uma exceção: {e}")
         
     def fBuscaLOG(self):
-        try:
+        # try:
             usuario = self.ui_Registros.users_log.text()
             if usuario:
                 usuario = usuario.lower()
@@ -747,32 +758,9 @@ class setarInicio():
             model = PandasModel(df)
             self.ui_Registros.tableView_LOG.setModel(model)
             self.ui_Registros.tableView_LOG.resizeColumnsToContents()
-        except Exception as e:
-            print(f"Ocorreu uma exceção: {e}")
+        # except Exception as e:
+        #     print(f"Ocorreu uma exceção: {e}")
 
-    def exportarLog(self):
-        try:
-            if self.df is not None and not self.df.empty:
-                folder_path = self.directory_export() 
-                if folder_path:
-                    file_name_pdf = os.path.join(folder_path, f"log_eventos_{datetime.now().date()}.pdf")
-
-                    pdf = PDF(self.usuario, datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
-
-                    pdf.add_page()
-                    pdf.add_log(self.df)
-
-                    pdf.output(file_name_pdf)
-                
-                    QMessageBox.information(None, 'Concluído', 'Arquivo de registros exportado com sucesso!')
-                else:
-                    QMessageBox.information(None, 'Alerta', 'Download cancelado!')
-            else:
-                QMessageBox.information(None, 'Alerta', 'Faça uma consulta para exportar os registros!')
-                return
-        
-        except Exception as e:
-            print(f"Ocorreu uma exceção: {e}")
 
 class PandasModel(QAbstractTableModel):
     """
@@ -798,42 +786,3 @@ class PandasModel(QAbstractTableModel):
         if orientation == Qt.Horizontal and role == Qt.DisplayRole:
             return self._data.columns[col]
         return None
-
-class PDF(FPDF):
-    def __init__(self, usuario):
-        super().__init__()
-        self.usuario = usuario
-        self.alias_nb_pages()
-
-    def header(self):
-        self.set_font('Arial', 'B', 12)
-        self.cell(0, 10, 'Log de Registros', 0, 1, 'C')
-
-    def footer(self):
-        self.set_y(-15)
-        self.set_font('Arial', 'B', 8)
-        # Adiciona a numeração de páginas
-        self.cell(0, 10, f'Página {self.page_no()} de {{nb}}', 0, 0, 'C')
-        self.ln(5)
-        # Adiciona o usuário e data/hora
-        self.cell(0, 10, f'Arquivo gerado por {self.usuario} em {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}', 0, 0, 'C')
-
-    def chapter_title(self, title):
-        self.set_font('Arial', 'B', 12)
-        self.cell(0, 10, title, 0, 1, 'L')
-        self.ln(10)
-
-    def chapter_body(self, body):
-        self.set_font('Arial', '', 12)
-        self.multi_cell(0, 10, body)
-        self.ln()
-
-    def add_log(self, df):
-        self.set_font('Arial', '', 10)
-        col_width = (self.w - 2 * self.l_margin)  # Ajuste a largura das colunas para se adequar ao layout da página
-        for index, row in df.iterrows():
-            self.multi_cell(col_width, 10, f"ID: {row['Id']}", 0, 1)
-            self.multi_cell(col_width, 10, f"Data: {row['Data']}", 0, 1)
-            self.multi_cell(col_width, 10, f"Registro: {row['Registro']}", 0, 1)
-            self.multi_cell(col_width, 10, f"Usuário: {row['Usuário']}", 0, 1)
-            self.ln()

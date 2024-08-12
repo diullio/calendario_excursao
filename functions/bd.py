@@ -383,8 +383,8 @@ class bd():
             sender = "sistemashypera@outlook.com"
             password = "Infohypera1234@"
             
-            recipients = ['estabilidade_documentacao@brainfarma.ind.br']
-
+            recipients = ["amanda.borges@brainfarma.ind.br", "andressa.maciel@brainfarma.ind.br", "eliane.tomaz@brainfarma.ind.br", "fernanda.sales@brainfarma.ind.br", "fernanda.fonseca@brainfarma.ind.br", "fernando.resende@brainfarma.ind.br", "gabriel.severino@brainfarma.ind.br", "gabriela.clemente@brainfarma.ind.br", "giovannasilva@brainfarma.ind.br", "havila.costa@brainfarma.ind.br", "laysse.gomes@brainfarma.ind.br", "lucas.o.souza@brainfarma.ind.br", "luisa.mello@brainfarma.ind.br", "paulo.g.almeida@brainfarma.ind.br", "vinni.vianna@brainfarma.ind.br", "vitor.franca@brainfarma.ind.br"]
+            
             # Criar a mensagem de e-mail
             msg = MIMEMultipart()
             msg['From'] = sender
