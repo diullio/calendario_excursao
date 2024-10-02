@@ -520,7 +520,8 @@ class setarInicio():
                     caminho_arquivo = os.path.join(self.folder_path, nome_arquivo)            
                     self.df_exportar.to_excel(caminho_arquivo, index=False)
         except:
-            QMessageBox(None, 'Alerta', "Dados inválidos, selecione uma nova data")
+            QMessageBox.information(None, 'Alerta', "Dados invalidos, selecione uma nova data")
+            return None
 
     def resetar_dias(self):
          # Formato de texto para resetar as datas para branco
