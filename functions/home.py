@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
-from PyQt5.QtWidgets import QMessageBox, QAbstractItemView, QMenu, QAction, QApplication
+from PyQt5.QtWidgets import QMessageBox, QAbstractItemView, QMenu, QAction, QApplication, QFileDialog
 from PyQt5.QtCore import Qt, QAbstractTableModel, QDate, QPoint
 from PyQt5.QtGui import QTextCharFormat, QColor
 from datetime import datetime, timedelta
@@ -28,6 +28,8 @@ class setarInicio():
 
         self.bd = bd
         self.directory_export = directory_export
+
+        self.df_exportar = None
 
         self.startSystem()
 
@@ -68,6 +70,7 @@ class setarInicio():
             self.gui.btn_buscar.clicked.connect(self.buscaCadastro)
             self.gui.btn_buscar.clicked.connect(self.consultaRetiradas)
             self.gui.tableView_agenda.doubleClicked.connect(self.showUpdateCadastro)
+            self.gui.btn_exportar.clicked.connect(self.exportarDocumento)
 
             #botoes cadastro
             self.ui_Cadastro.btn_cadastro.clicked.connect(self.CadastrarInfos)
@@ -489,6 +492,7 @@ class setarInicio():
             df = self.converter_e_substituir_datas(df, '15 Dias')
             df = df.replace({pd.NaT: '-', 'NaT': '-', '': '-', None: '-'})
 
+            self.df_exportar = df.copy()
             model = PandasModel(df)
             self.gui.tableView_agenda.setModel(model)
             self.gui.tableView_agenda.setSelectionMode(QAbstractItemView.SingleSelection)
@@ -497,6 +501,26 @@ class setarInicio():
             self.gui.tableView_agenda.customContextMenuRequested.connect(self.open_menu)
         # except Exception as e:
         #     print(f"Ocorreu uma exceção: {e}")    
+
+    def directory_export(self):
+            options = QFileDialog.Options()
+            options |= QFileDialog.ShowDirsOnly
+            folder_path = QFileDialog.getExistingDirectory(self, "Selecionar Pasta", options=options)
+            return folder_path
+    
+    def exportarDocumento(self):
+        try:
+            if self.df_exportar:
+                self.folder_path = self.directory_export() 
+                if self.folder_path:
+                    data_e_hora_atual = datetime.now().strftime('%Y%m%d_%H%M%S')
+                    # Gerando o nome do arquivo com base na data e hora
+                    nome_arquivo = f"excursao_{data_e_hora_atual}.xlsx"
+
+                    caminho_arquivo = os.path.join(self.folder_path, nome_arquivo)            
+                    self.df_exportar.to_excel(caminho_arquivo, index=False)
+        except:
+            QMessageBox(None, 'Alerta', "Dados inválidos, selecione uma nova data")
 
     def resetar_dias(self):
          # Formato de texto para resetar as datas para branco

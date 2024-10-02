@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '.\gui_main.ui'
+# Form implementation generated from reading ui file 'gui_main.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.10
 #
@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1304, 745)
+        MainWindow.resize(1281, 773)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.centralwidget)
@@ -58,6 +58,19 @@ class Ui_MainWindow(object):
         self.gridGroupBox_3.setObjectName("gridGroupBox_3")
         self.gridLayout_11 = QtWidgets.QGridLayout(self.gridGroupBox_3)
         self.gridLayout_11.setObjectName("gridLayout_11")
+        self.calendarWidget = QtWidgets.QCalendarWidget(self.gridGroupBox_3)
+        self.calendarWidget.setObjectName("calendarWidget")
+        self.gridLayout_11.addWidget(self.calendarWidget, 1, 0, 1, 1)
+        self.tableView_agenda = QtWidgets.QTableView(self.gridGroupBox_3)
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.tableView_agenda.setFont(font)
+        self.tableView_agenda.setStyleSheet("")
+        self.tableView_agenda.setObjectName("tableView_agenda")
+        self.gridLayout_11.addWidget(self.tableView_agenda, 1, 1, 1, 1)
+        self.gridLayout_3 = QtWidgets.QGridLayout()
+        self.gridLayout_3.setObjectName("gridLayout_3")
         self.btn_retirar_analise = QtWidgets.QPushButton(self.gridGroupBox_3)
         font = QtGui.QFont()
         font.setBold(False)
@@ -75,18 +88,26 @@ class Ui_MainWindow(object):
 "                color: rgb(0, 74, 153); /* fonte branca */\n"
 "            }")
         self.btn_retirar_analise.setObjectName("btn_retirar_analise")
-        self.gridLayout_11.addWidget(self.btn_retirar_analise, 2, 1, 1, 1)
-        self.calendarWidget = QtWidgets.QCalendarWidget(self.gridGroupBox_3)
-        self.calendarWidget.setObjectName("calendarWidget")
-        self.gridLayout_11.addWidget(self.calendarWidget, 1, 0, 1, 1)
-        self.tableView_agenda = QtWidgets.QTableView(self.gridGroupBox_3)
+        self.gridLayout_3.addWidget(self.btn_retirar_analise, 0, 0, 1, 1)
+        self.btn_exportar = QtWidgets.QPushButton(self.gridGroupBox_3)
         font = QtGui.QFont()
-        font.setBold(True)
-        font.setWeight(75)
-        self.tableView_agenda.setFont(font)
-        self.tableView_agenda.setStyleSheet("")
-        self.tableView_agenda.setObjectName("tableView_agenda")
-        self.gridLayout_11.addWidget(self.tableView_agenda, 1, 1, 1, 1)
+        font.setBold(False)
+        font.setWeight(50)
+        self.btn_exportar.setFont(font)
+        self.btn_exportar.setStyleSheet("QPushButton {\n"
+"                border: 2px solid #004a99; /* borda azul */\n"
+"                border-radius: 5px; /* bordas mais quadradas */\n"
+"                color: rgb(255, 255, 255); /* fonte azul */\n"
+"                padding:3px 10px;\n"
+"    background-color: rgb(0, 74, 153);\n"
+"            }\n"
+"QPushButton:hover {\n"
+"                background-color: rgb(255, 255, 255); /* hover azul */\n"
+"                color: rgb(0, 74, 153); /* fonte branca */\n"
+"            }")
+        self.btn_exportar.setObjectName("btn_exportar")
+        self.gridLayout_3.addWidget(self.btn_exportar, 0, 1, 1, 1)
+        self.gridLayout_11.addLayout(self.gridLayout_3, 2, 1, 1, 1)
         self.gridLayout_2.addWidget(self.gridGroupBox_3, 5, 0, 1, 2)
         self.label_49 = QtWidgets.QLabel(self.centralwidget)
         font = QtGui.QFont()
@@ -246,7 +267,7 @@ class Ui_MainWindow(object):
         self.gridLayout_2.addWidget(self.label_137, 8, 0, 1, 2)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1304, 21))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1281, 22))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -262,6 +283,7 @@ class Ui_MainWindow(object):
         self.btn_cadastro.setText(_translate("MainWindow", "Cadastro"))
         self.btn_registro.setText(_translate("MainWindow", "Auditoria"))
         self.btn_retirar_analise.setText(_translate("MainWindow", "Retirar para análise"))
+        self.btn_exportar.setText(_translate("MainWindow", "Exportar"))
         self.label_49.setText(_translate("MainWindow", "Estabilidade de excursão"))
         self.label_34.setText(_translate("MainWindow", "De:"))
         self.label_5.setText(_translate("MainWindow", "Lote:"))
