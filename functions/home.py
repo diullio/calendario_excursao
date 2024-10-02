@@ -510,7 +510,7 @@ class setarInicio():
     
     def exportarDocumento(self):
         try:
-            if self.df_exportar:
+            if self.df_exportar is not None and not self.df_exportar.empty:
                 self.folder_path = self.directory_export() 
                 if self.folder_path:
                     data_e_hora_atual = datetime.now().strftime('%Y%m%d_%H%M%S')
