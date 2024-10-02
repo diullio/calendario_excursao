@@ -11,6 +11,8 @@ import socket
 script_dir = os.path.dirname(os.path.abspath(__file__))
 ABSOLUT_PATH = os.path.join(script_dir, '..')
 database_path = os.path.join(ABSOLUT_PATH, 'database')
+RECIPIENTS = ["amanda.borges@brainfarma.ind.br", "andressa.maciel@brainfarma.ind.br", "fernanda.sales@brainfarma.ind.br", "fernanda.fonseca@brainfarma.ind.br", "fernando.resende@brainfarma.ind.br", "gabriel.severino@brainfarma.ind.br", "gabriela.clemente@brainfarma.ind.br", "giovannasilva@brainfarma.ind.br", "havila.costa@brainfarma.ind.br", "laysse.gomes@brainfarma.ind.br", "lucas.o.souza@brainfarma.ind.br", "luisa.mello@brainfarma.ind.br", "paulo.g.almeida@brainfarma.ind.br", "vitor.franca@brainfarma.ind.br"]
+
 
 class bd():
     def __init__(self, usuario):
@@ -159,8 +161,8 @@ class bd():
             # Consultar se o usuário já existe na tabela de login
             sqlite_select_query = f"""SELECT id, codigo, num_estudo, produto, lote, data, chk_5dias, chk_15dias, usuario 
             FROM excursao 
-            WHERE data = ? OR chk_5dias = ? OR chk_15dias = ?"""
-            c.execute(sqlite_select_query, (data, data, data))
+            WHERE chk_5dias = ? OR chk_15dias = ?"""
+            c.execute(sqlite_select_query, (data, data))
             registros = c.fetchall()
 
             if registros:
@@ -383,7 +385,7 @@ class bd():
             sender = "sistemashypera@outlook.com"
             password = "Infohypera1234@"
             
-            recipients = ["amanda.borges@brainfarma.ind.br", "andressa.maciel@brainfarma.ind.br", "eliane.tomaz@brainfarma.ind.br", "fernanda.sales@brainfarma.ind.br", "fernanda.fonseca@brainfarma.ind.br", "fernando.resende@brainfarma.ind.br", "gabriel.severino@brainfarma.ind.br", "gabriela.clemente@brainfarma.ind.br", "giovannasilva@brainfarma.ind.br", "havila.costa@brainfarma.ind.br", "laysse.gomes@brainfarma.ind.br", "lucas.o.souza@brainfarma.ind.br", "luisa.mello@brainfarma.ind.br", "paulo.g.almeida@brainfarma.ind.br", "vinni.vianna@brainfarma.ind.br", "vitor.franca@brainfarma.ind.br"]
+            recipients = RECIPIENTS
             
             # Criar a mensagem de e-mail
             msg = MIMEMultipart()

@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(784, 323)
+        Dialog.resize(784, 430)
         self.gridLayout_3 = QtWidgets.QGridLayout(Dialog)
         self.gridLayout_3.setObjectName("gridLayout_3")
         spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
@@ -129,6 +129,10 @@ class Ui_Dialog(object):
 "            }")
         self.chk_15dias.setObjectName("chk_15dias")
         self.gridLayout_2.addWidget(self.chk_15dias, 1, 0, 1, 1)
+        self.label = QtWidgets.QLabel(Dialog)
+        self.label.setStyleSheet("color: rgb(178, 34, 34);")
+        self.label.setObjectName("label")
+        self.gridLayout_2.addWidget(self.label, 2, 0, 1, 1)
         self.gridLayout.addLayout(self.gridLayout_2, 5, 1, 1, 2)
         self.label_4 = QtWidgets.QLabel(Dialog)
         font = QtGui.QFont()
@@ -216,13 +220,14 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
+        Dialog.setWindowTitle(_translate("Dialog", "Cadastro de Amostra"))
         self.label_49.setText(_translate("Dialog", "Cadastro de Amostra"))
         self.label_2.setText(_translate("Dialog", "Código:"))
         self.label_5.setText(_translate("Dialog", "Lote:"))
-        self.label_6.setText(_translate("Dialog", "Data:"))
+        self.label_6.setText(_translate("Dialog", "Data de início:"))
         self.chk_5dias.setText(_translate("Dialog", " 5 dias - Excursão 2 (50ºC)"))
         self.chk_15dias.setText(_translate("Dialog", " 15 dias - Excursão 1 (40ºC)"))
+        self.label.setText(_translate("Dialog", "As datas de retiradas serão calculadas automaticamente, em caso de retirada em sábados ou domingos o sistema irá propor novas datas."))
         self.label_4.setText(_translate("Dialog", "Produto"))
         self.label_3.setText(_translate("Dialog", "Nº de Estudo:"))
         self.label_7.setText(_translate("Dialog", "Tipo de estudo:"))
